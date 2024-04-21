@@ -3,12 +3,11 @@ import os
 import gradio as gr
 from groq import Groq
 
-groq_api_key = os.environ.get('Groq_Api_Key')
-
-subprocess.run(["export", f"GROQ_API_KEY={groq_api_key}"], check=True)
-
 def generate_response(input_text):
-    client = Groq()
+    client = Groq(
+    api_key=os.environ.get("Groq_Api_Key"),
+    )
+
 
     stream = client.chat.completions.create(
         messages=[
