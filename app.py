@@ -24,7 +24,9 @@ def generate_response(input_text):
 
     response = ""
     for chunk in stream:
-        response += chunk.choices[0].delta.content
+        delta_content = chunk.choices[0].delta.content
+        if delta_content is not None:
+            response += delta_content
 
     return response
 
