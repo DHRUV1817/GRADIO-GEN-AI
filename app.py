@@ -28,8 +28,9 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
     response = ""
     for chunk in stream:
         delta_content = chunk.choices[0].delta.content
-        response += delta_content
-        yield response
+        if delta_content is not None:
+            response += delta_content
+            yield response
 
     return response
 
