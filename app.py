@@ -10,11 +10,13 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
 
     if seed == 0:
         seed = random.randint(1, 100000)
+
+    input_text = prompt + history
     
     stream = client.chat.completions.create(
         messages=[
             {"role": "system", "content": "you are a helpful assistant."},
-            {"role": "user", "content": prompt + history}
+            {"role": "user", "content": input_text}
         ],
         model=model,
         temperature=temperature,
