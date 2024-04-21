@@ -1,5 +1,11 @@
+import subprocess
+import os
 import gradio as gr
 from groq import Groq
+
+groq_api_key = os.environ('Groq_Api_key')
+
+subprocess.run(["export", f"GROQ_API_KEY={groq_api_key}"], check=True)
 
 def generate_response(input_text):
     client = Groq()
@@ -24,8 +30,8 @@ def generate_response(input_text):
     return response
 
 # Define the Gradio UI
-inputs = gr.inputs.Textbox(label="Enter your question")
-outputs = gr.outputs.Textbox(label="Model Response")
+inputs = gr.Textbox(label="Enter your question")
+outputs = gr.Textbox(label="Model Response")
 
 gr.Interface(
     fn=generate_response,
