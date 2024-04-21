@@ -14,7 +14,7 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
     stream = client.chat.completions.create(
         messages=[
             {"role": "system", "content": "you are a helpful assistant."},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": prompt + history}
         ],
         model=model,
         temperature=temperature,
