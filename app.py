@@ -6,7 +6,9 @@ import gradio as gr
 from groq import Groq
 
 def generate_response(prompt, history, model, temperature, max_tokens, top_p):
-    client = Groq()
+    client = Groq(
+        api_key = os.environ.get("Groq_Api_Key")
+    )
 
     stream = client.chat.completions.create(
         messages=[
