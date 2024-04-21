@@ -5,7 +5,7 @@ from groq import Groq
 import gradio as gr
 from groq import Groq
 
-def generate_response(input_text, model, temperature, max_tokens, top_p):
+def generate_response(prompt, history, model, temperature, max_tokens, top_p):
     client = Groq()
 
     stream = client.chat.completions.create(
@@ -31,7 +31,7 @@ def generate_response(input_text, model, temperature, max_tokens, top_p):
 
 # Define the Gradio chat interface
 additional_inputs = [
-    gr.Dropdown(choices=["mixtral-8x7b-32768", "mixtral-12x7b-32768"], label="Model"),
+    gr.Dropdown(choices=["llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768", "llama2-70b-4096", "gemma-7b-it"], label="Model"),
     gr.Slider(minimum=0.0, maximum=1.0, step=0.01, label="Temperature"),
     gr.Slider(minimum=1, maximum=4096, step=1, label="Max Tokens"),
     gr.Slider(minimum=0.0, maximum=1.0, step=0.01, label="Top P"),
