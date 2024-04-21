@@ -1,5 +1,6 @@
 import subprocess
 import os
+import httpx
 import gradio as gr
 from groq import Groq
 
