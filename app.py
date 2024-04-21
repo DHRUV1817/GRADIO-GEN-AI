@@ -20,7 +20,7 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
         temperature=temperature,
         max_tokens=max_tokens,
         top_p=top_p,
-        seed=seed
+        seed=seed,
         stop=None,
         stream=True,
     )
