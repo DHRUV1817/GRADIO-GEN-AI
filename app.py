@@ -3,7 +3,7 @@ import os
 import gradio as gr
 from groq import Groq
 
-groq_api_key = os.environ('Groq_Api_key')
+groq_api_key = os.environ.get('Groq_Api_Key')
 
 subprocess.run(["export", f"GROQ_API_KEY={groq_api_key}"], check=True)
 
