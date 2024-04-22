@@ -7,23 +7,15 @@ client = Groq(
     api_key = os.environ.get("Groq_Api_Key")
 )
     
+def create_history_messages(history):
+    history_messages = [{"role": "user", "content": m[0]} for m in history]
+    history_messages.extend([{"role": "assistant", "content": m[1]} for m in history])
+    return history_messages
 
 def generate_response(prompt, history, model, temperature, max_tokens, top_p, seed):
-    messages = []
-    for i, data in enumerate(history):
-        if i % 2 == 0:
-            role = 'user'
-        else:
-            role = 'assistant'
-        message = {}
-        message["role"] = role
-        message["content"] = data
-        messages.append(message)
-
-    message = {}
-    message["role"] = "user" 
-    message["content"] = prompt
-    messages.append(message)
+    messages = create_history_messages(history)
+    messages.append({"role": "user", "content": prompt})
+    print(messages)
 
     if seed == 0:
         seed = random.randint(1, 100000)
