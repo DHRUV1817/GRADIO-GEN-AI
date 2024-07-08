@@ -1,6 +1,6 @@
 ---
-title: Groq API Models
-emoji: 🐠
+title: Groq Gradio Playground
+emoji: 🐇
 colorFrom: gray
 colorTo: purple
 sdk: gradio
