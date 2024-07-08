@@ -45,13 +45,11 @@ additional_inputs = [
     gr.Slider(minimum=0.0, maximum=1.0, step=0.01, value=0.5, label="Temperature", info="Controls diversity of the generated text. Lower is more deterministic, higher is more creative."),
     gr.Slider(minimum=1, maximum=32192, step=1, value=4096, label="Max Tokens", info="The maximum number of tokens that the model can process in a single response.<br>Maximums: 8k for gemma 7b it, gemma2 9b it, llama 7b & 70b, 32k for mixtral 8x7b."),
     gr.Slider(minimum=0.0, maximum=1.0, step=0.01, value=0.5, label="Top P", info="A method of text generation where a model will only consider the most probable next tokens that make up the probability p."),
-    gr.Number(precision=0, value=42, label="Seed", info="A starting point to initiate generation, use 0 for random")
+    gr.Number(precision=0, value=0, label="Seed", info="A starting point to initiate generation, use 0 for random")
 ]
 
 gr.ChatInterface(
-    fn=generate_response,
+    fn=generate_response, theme="Nymbo/Nymbo_Theme",
     chatbot=gr.Chatbot(show_label=False, show_share_button=False, show_copy_button=True, likeable=True, layout="panel"),
     additional_inputs=additional_inputs,
-    title="Groq API UI",
-    description="Inference by Groq. Hugging Face Space by [Nick088](https://linktr.ee/Nick088)",
 ).launch()
