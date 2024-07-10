@@ -49,7 +49,7 @@ additional_inputs = [
 ]
 
 gr.ChatInterface(
-    fn=generate_response, theme="Nymbo/Nymbo_Theme",
+    fn=generate_response, theme="Nymbo/Alyx_Theme",
     chatbot=gr.Chatbot(show_label=False, show_share_button=False, show_copy_button=True, likeable=True, layout="panel"),
     additional_inputs=additional_inputs,
 ).launch()
