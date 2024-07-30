@@ -41,9 +41,9 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
     return response
 
 additional_inputs = [
-    gr.Dropdown(choices=["llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768", "gemma-7b-it", "gemma2-9b-it"], value="llama3-70b-8192", label="Model"),
+    gr.Dropdown(choices=["llama-3.1-405b-reasoning", "llama-3.1-70b-versatile", "llama-3.1-8b-instant", "llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768", "gemma2-9b-it", "gemma-7b-it"], value="llama-3.1-405b-reasoning", label="Model"),
     gr.Slider(minimum=0.0, maximum=1.0, step=0.01, value=0.5, label="Temperature", info="Controls diversity of the generated text. Lower is more deterministic, higher is more creative."),
-    gr.Slider(minimum=1, maximum=32192, step=1, value=4096, label="Max Tokens", info="The maximum number of tokens that the model can process in a single response.<br>Maximums: 8k for gemma 7b it, gemma2 9b it, llama 7b & 70b, 32k for mixtral 8x7b."),
+    gr.Slider(minimum=1, maximum=131000, step=1, value=8100, label="Max Tokens", info="The maximum number of tokens that the model can process in a single response.<br>Maximums: 8k for gemma 7b it, gemma2 9b it, llama 7b & 70b, 32k for mixtral 8x7b, 132k for llama 3.1."),
     gr.Slider(minimum=0.0, maximum=1.0, step=0.01, value=0.5, label="Top P", info="A method of text generation where a model will only consider the most probable next tokens that make up the probability p."),
     gr.Number(precision=0, value=0, label="Seed", info="A starting point to initiate generation, use 0 for random")
 ]
