@@ -45,7 +45,8 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
 additional_inputs = [
     gr.Dropdown(
         choices=[
-            "llama-3.1-405b-reasoning",
+            "llama-3.2-3b-preview",
+            "llama-3.2-1b-preview",
             "llama-3.1-70b-versatile",
             "llama-3.1-8b-instant",
             "llama3-70b-8192",
