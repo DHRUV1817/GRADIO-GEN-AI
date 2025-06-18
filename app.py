@@ -45,15 +45,12 @@ def generate_response(prompt, history, model, temperature, max_tokens, top_p, se
 additional_inputs = [
     gr.Dropdown(
         choices=[
-            "llama-3.2-3b-preview",
-            "llama-3.2-1b-preview",
-            "llama-3.1-70b-versatile",
+            "llama-3.3-70b-versatile",
             "llama-3.1-8b-instant",
-            "llama3-70b-8192",
-            "llama3-8b-8192",
-            "mixtral-8x7b-32768",
             "gemma2-9b-it",
-            "gemma-7b-it"
+            "meta-llama/llama-4-maverick-17b-128e-instruct",
+            "meta-llama/llama-4-scout-17b-16e-instruct",
+            "deepseek-r1-distill-llama-70b"
         ],
         value="llama-3.1-70b-versatile",
         label="Model"
