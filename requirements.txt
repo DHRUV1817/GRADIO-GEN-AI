@@ -1,3 +1,13 @@
-gradio>=4.0.0
-groq>=0.4.0
-python-dotenv>=1.0.0
+gradio==5.48.0
+groq==0.32.0
+python-dotenv==1.1.1
+aiohttp==3.8.4
+aiofiles==24.1.0
+httpx==0.28.1
+orjson==3.11.3
+numpy==2.2.6
+pandas==2.3.3
+pillow==11.3.0
+uvicorn==0.37.0
+typing-extensions==4.15.0
+tqdm==4.67.1
