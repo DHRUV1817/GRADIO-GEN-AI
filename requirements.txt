@@ -1,13 +1,32 @@
+# Core Framework
 gradio==5.48.0
 groq==0.32.0
 python-dotenv==1.1.1
-aiohttp==3.8.4
+
+# Async & Performance
+aiohttp==3.11.11
 aiofiles==24.1.0
 httpx==0.28.1
 orjson==3.11.3
+
+# Type Support
+typing-extensions==4.15.0
+
+# Data & Imaging
 numpy==2.2.6
 pandas==2.3.3
 pillow==11.3.0
-uvicorn==0.37.0
-typing-extensions==4.15.0
+
+# Production Server
+uvicorn[standard]==0.37.0
+gunicorn==23.0.0
+
+# Monitoring & Logging
 tqdm==4.67.1
+
+# Optional: Rate Limiting & Security
+slowapi==0.1.9
+python-multipart==0.0.19
+tenacity
+tiktoken
+reportlab

@@ -16,7 +16,6 @@ from groq import Groq
 
 from config import logger, AppConfig, ReasoningMode, ModelConfig
 
-# Thread-safe caching decorator
 class ResponseCache:
     """Thread-safe LRU cache for API responses"""
     def __init__(self, maxsize: int = 100, ttl: int = 3600):
@@ -209,7 +208,7 @@ def error_handler(func):
                     time.sleep(retry_delay)
                     retry_delay *= 2
                 else:
-                    error_msg = f"⚠️ **System Error:** {str(e)}\n\n"
+                    error_msg = f"System Error: {str(e)}\n\n"
                     
                     if "api" in str(e).lower() or "key" in str(e).lower():
                         error_msg += "Please verify your GROQ_API_KEY in the .env file."
@@ -366,7 +365,7 @@ Find similar problems and apply their solutions."""
     
     REASONING_PROMPTS = {
         ReasoningMode.TREE_OF_THOUGHTS: """
-🌳 **Tree of Thoughts Analysis**
+**Tree of Thoughts Analysis**
 
 Problem: {query}
 
@@ -383,7 +382,7 @@ PATH C (Synthesis): [Integrate insights]
 **Final Solution:** [Most robust answer with justification]""",
 
         ReasoningMode.CHAIN_OF_THOUGHT: """
-🔗 **Step-by-Step Reasoning**
+**Step-by-Step Reasoning**
 
 Problem: {query}
 
@@ -396,7 +395,7 @@ Step 5: Validate and verify
 Final Answer: [Clear, justified conclusion]""",
 
         ReasoningMode.SELF_CONSISTENCY: """
-🎯 **Multi-Path Consistency Check**
+**Multi-Path Consistency Check**
 
 Problem: {query}
 
@@ -407,7 +406,7 @@ Problem: {query}
 **Consensus:** [Most consistent answer across attempts]""",
 
         ReasoningMode.REFLEXION: """
-🔍 **Reflexion with Self-Correction**
+**Reflexion with Self-Correction**
 
 Problem: {query}
 
@@ -421,7 +420,7 @@ Problem: {query}
 **Refined Solution:** [Improved answer based on reflection]""",
 
         ReasoningMode.DEBATE: """
-💬 **Multi-Agent Debate**
+**Multi-Agent Debate**
 
 Problem: {query}
 
@@ -430,7 +429,7 @@ Problem: {query}
 **Synthesis:** [Balanced conclusion]""",
 
         ReasoningMode.ANALOGICAL: """
-🔄 **Analogical Reasoning**
+**Analogical Reasoning**
 
 Problem: {query}
 
@@ -487,8 +486,8 @@ class ConversationExporter:
             md += f"**Model:** {entry.model}  \n"
             md += f"**Mode:** {entry.reasoning_mode}  \n"
             md += f"**Performance:** {entry.inference_time:.2f}s | {entry.tokens} tokens\n\n"
-            md += f"### 👤 User\n\n{entry.user_message}\n\n"
-            md += f"### 🤖 Assistant\n\n{entry.ai_response}\n\n"
+            md += f"### User\n\n{entry.user_message}\n\n"
+            md += f"### Assistant\n\n{entry.ai_response}\n\n"
             md += "---\n\n"
         
         return md
@@ -572,7 +571,7 @@ class ConversationExporter:
                 spaceAfter=6
             )
             
-            story.append(Paragraph("🔬 AI Reasoning Chat History", title_style))
+            story.append(Paragraph("AI Reasoning Chat History", title_style))
             story.append(Paragraph(
                 f"Exported on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", 
                 meta_style
@@ -589,14 +588,14 @@ class ConversationExporter:
                 story.append(Paragraph(perf_text, meta_style))
                 story.append(Spacer(1, 0.1*inch))
                 
-                story.append(Paragraph("👤 <b>User:</b>", user_style))
+                story.append(Paragraph("<b>User:</b>", user_style))
                 user_msg = entry.user_message.replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br/>')
                 if len(user_msg) > 3000:
                     user_msg = user_msg[:3000] + "... (truncated)"
                 story.append(Paragraph(user_msg, user_style))
                 story.append(Spacer(1, 0.15*inch))
                 
-                story.append(Paragraph("🤖 <b>Assistant:</b>", ai_style))
+                story.append(Paragraph("<b>Assistant:</b>", ai_style))
                 ai_resp = entry.ai_response.replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br/>')
                 if len(ai_resp) > 5000:
                     ai_resp = ai_resp[:5000] + "... (truncated)"
@@ -774,12 +773,12 @@ class AdvancedReasoner:
         
         is_valid, error_msg = validate_input(query)
         if not is_valid:
-            yield f"❌ **Validation Error:** {error_msg}"
+            yield f"Validation Error: {error_msg}"
             return
         
         allowed, wait_time = self.rate_limiter.is_allowed()
         if not allowed:
-            yield f"⏸️ **Rate Limit:** Please wait {wait_time:.1f} seconds."
+            yield f"Rate Limit: Please wait {wait_time:.1f} seconds."
             return
         
         cache_key = self._generate_cache_key(query, model, reasoning_mode.value, temperature, prompt_template)
@@ -837,7 +836,7 @@ class AdvancedReasoner:
                     "content": self.prompt_engine.build_critique_prompt()
                 })
                 
-                full_response += "\n\n---\n### 🔍 Validation & Self-Critique\n"
+                full_response += "\n\n---\n### Validation & Self-Critique\n"
                 
                 try:
                     critique_stream = self.client.chat.completions.create(
@@ -980,5 +979,8 @@ class AdvancedReasoner:
     
     def __del__(self):
         """Cleanup on deletion"""
-        self.executor.shutdown(wait=False)
-        logger.info("AdvancedReasoner cleanup completed")
+        try:
+            self.executor.shutdown(wait=False)
+            logger.info("AdvancedReasoner cleanup completed")
+        except:
+            pass

@@ -8,6 +8,10 @@ def setup_logging():
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     
+    # Prevent duplicate handlers
+    if logger.handlers:
+        return logger
+    
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
     console_format = logging.Formatter(
@@ -82,29 +86,22 @@ AppConfig.validate()
 
 class ReasoningMode(Enum):
     """Research-aligned reasoning methodologies"""
-    TREE_OF_THOUGHTS = "🌳 Tree of Thoughts (ToT)"
-    CHAIN_OF_THOUGHT = "🔗 Chain of Thought (CoT)"
-    SELF_CONSISTENCY = "🎯 Self-Consistency Sampling"
-    REFLEXION = "🔍 Reflexion + Self-Correction"
-    DEBATE = "💬 Multi-Agent Debate"
-    ANALOGICAL = "🔄 Analogical Reasoning"
-
-from enum import Enum
+    TREE_OF_THOUGHTS = "Tree of Thoughts (ToT)"
+    CHAIN_OF_THOUGHT = "Chain of Thought (CoT)"
+    SELF_CONSISTENCY = "Self-Consistency Sampling"
+    REFLEXION = "Reflexion + Self-Correction"
+    DEBATE = "Multi-Agent Debate"
+    ANALOGICAL = "Analogical Reasoning"
 
 class ModelConfig(Enum):
-    """
-    Available models with specifications.
-    The tuple format is: (model_id, parameters_in_billions, context_window, description)
-    """
+    """Available models with specifications"""
     # Original Models
     LLAMA_70B = ("llama-3.3-70b-versatile", 70, 8000, "Best overall")
     DEEPSEEK_70B = ("deepseek-r1-distill-llama-70b", 70, 8000, "Optimized reasoning")
     MIXTRAL_8X7B = ("mixtral-8x7b-32768", 47, 32768, "Long context")
     LLAMA_70B_V31 = ("llama-3.1-70b-versatile", 70, 8000, "Stable")
     GEMMA_9B = ("gemma2-9b-it", 9, 8192, "Fast")
-
-    # --- Added Models ---
-
+    
     # Meta / Llama
     LLAMA_3_1_8B_INSTANT = ("llama-3.1-8b-instant", 8, 131072, "Fast responses")
     LLAMA_4_MAVERICK_17B = ("meta-llama/llama-4-maverick-17b-128k", 17, 131072, "Llama 4 experimental")
@@ -112,25 +109,21 @@ class ModelConfig(Enum):
     LLAMA_GUARD_4_12B = ("meta-llama/llama-guard-4-12b", 12, 8192, "Safety/Guard model")
     LLAMA_PROMPT_GUARD_2_22M = ("meta-llama/llama-prompt-guard-2-22m", 0, 8192, "Prompt safety (22M)")
     LLAMA_PROMPT_GUARD_2_86M = ("meta-llama/llama-prompt-guard-2-86m", 0, 8192, "Prompt safety (86M)")
-
+    
     # Moonshot AI
     KIMI_K2_INSTRUCT_DEPRECATED = ("moonshotai/kimi-k2-instruct", 0, 200000, "Long context (Deprecated)")
     KIMI_K2_INSTRUCT_0905 = ("moonshotai/kimi-k2-instruct-0905", 0, 200000, "Long context")
-
+    
     # OpenAI
     GPT_OSS_120B = ("openai/gpt-oss-120b", 120, 8192, "OpenAI open source model")
     GPT_OSS_20B = ("openai/gpt-oss-20b", 20, 8192, "OpenAI open source model")
-
+    
     # Qwen
     QWEN3_32B = ("qwen/qwen3-32b", 32, 32768, "Qwen 3 model")
-
+    
     # Groq
     GROQ_COMPOUND = ("groq/compound", 0, 8192, "Groq compound model")
     GROQ_COMPOUND_MINI = ("groq/compound-mini", 0, 8192, "Groq mini compound model")
-
-# Example of how to use it
-# print(ModelConfig.LLAMA_4_MAVERICK_17B.value)
-# ('meta-llama/llama-4-maverick-17b-128k', 17, 131072, 'Llama 4 experimental')
     
     def __init__(self, model_id: str, params_b: int, max_context: int, description: str):
         self.model_id = model_id
@@ -184,7 +177,6 @@ CUSTOM_CSS = """
     background: rgba(255,255,255,0.35);
 }
 
-/* FIXED: Metrics card with proper text color contrast */
 .metrics-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border-left: 5px solid #667eea;
@@ -193,12 +185,12 @@ CUSTOM_CSS = """
     margin: 1rem 0;
     font-family: 'JetBrains Mono', monospace;
     transition: var(--transition);
-    color: #2c3e50 !important;  /* Dark text for visibility */
+    color: #2c3e50 !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .metrics-card strong {
-    color: #1a1a1a !important;  /* Even darker for emphasis */
+    color: #1a1a1a !important;
     font-weight: 600;
 }
 
@@ -207,7 +199,6 @@ CUSTOM_CSS = """
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-/* FIXED: Analytics panel with proper text visibility */
 .analytics-panel {
     background: var(--success-gradient);
     color: white;
@@ -268,7 +259,6 @@ CUSTOM_CSS = """
     transform: translateY(-2px) !important; 
 }
 
-/* Additional text contrast fixes for Gradio components */
 .gr-markdown {
     color: #2c3e50 !important;
 }
@@ -277,6 +267,5 @@ CUSTOM_CSS = """
     color: #1a1a1a !important;
 }
 """
-
 
 logger.info("Enhanced configuration initialized")
